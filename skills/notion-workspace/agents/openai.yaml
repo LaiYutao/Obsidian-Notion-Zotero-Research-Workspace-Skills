@@ -1,0 +1,4 @@
+interface:
+  display_name: "Notion Workspace"
+  short_description: "Read and write Notion pages like an online note vault"
+  default_prompt: "Use $notion-workspace to search, read, create, or append to my Notion pages through Notion MCP."

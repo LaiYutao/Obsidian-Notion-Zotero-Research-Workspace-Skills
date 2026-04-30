@@ -1,0 +1,15 @@
+.DS_Store
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Local/editor state
+.idea/
+.vscode/
+
+# Local secrets and environment files
+.env
+.env.*
+!.env.example

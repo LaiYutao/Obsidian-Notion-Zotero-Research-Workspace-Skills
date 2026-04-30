@@ -1,0 +1,6 @@
+interface:
+  display_name: "Zotero Library"
+  short_description: "Read Zotero libraries and create notes"
+  default_prompt: "Use $zotero-library to read a Zotero collection or article and create a Zotero note."
+policy:
+  allow_implicit_invocation: true

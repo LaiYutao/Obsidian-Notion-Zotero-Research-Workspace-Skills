@@ -1,0 +1,4 @@
+interface:
+  display_name: "Obsidian Vault"
+  short_description: "Read and write Obsidian vault notes efficiently"
+  default_prompt: "Use $obsidian-vault to create or update notes in my Obsidian vault with date and content-derived tags."
