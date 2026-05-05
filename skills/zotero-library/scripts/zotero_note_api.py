@@ -100,6 +100,18 @@ def create_note(args: argparse.Namespace) -> None:
     print(json.dumps(result, ensure_ascii=False, indent=2))
 
 
+def update_note(args: argparse.Namespace) -> None:
+    note_html = read_note_html(args.html, args.text)
+    cfg = config()
+    current = request_json("GET", library_path(cfg) + f"/items/{args.note_key}", cfg)
+    body = dict(current["data"])
+    body["note"] = note_html.strip()
+    if args.parent_key:
+        body["parentItem"] = args.parent_key
+    result = request_json("PUT", library_path(cfg) + f"/items/{args.note_key}", cfg, body)
+    print(json.dumps(result, ensure_ascii=False, indent=2))
+
+
 def check_config(_: argparse.Namespace) -> None:
     cfg = config()
     result = request_json("GET", library_path(cfg) + "/items/top?limit=1&format=json", cfg)
@@ -127,6 +139,13 @@ def main() -> None:
     p_child.add_argument("--text")
     p_child.add_argument("--dry-run", action="store_true")
     p_child.set_defaults(func=create_note)
+
+    p_update = sub.add_parser("update-note")
+    p_update.add_argument("--note-key", required=True)
+    p_update.add_argument("--parent-key")
+    p_update.add_argument("--html")
+    p_update.add_argument("--text")
+    p_update.set_defaults(func=update_note)
 
     args = parser.parse_args()
     args.func(args)

@@ -132,7 +132,19 @@ PDF visual evidence workflow:
 Evidence-based summary format:
 
 - Start with `Reading scope`: current-session text receipt, whether every required delivery-window BEGIN/END pair was visible without tool-level truncation/omission, whether PDF/visual inspection was requested or used, and any missing evidence.
+- Then give a reader-first grasp of the paper before the long summary:
+  - Use a short `One-sentence takeaway` or equivalent opening section, but do not force everything into one overloaded sentence.
+  - First state the method's place and role in the broader workflow (e.g. where it acts, what it replaces or does not replace, what part of the system still does the main work).
+  - Then state the concrete mechanism: what state it maintains, what signal it computes, what decision it makes, and what cost it avoids.
+  - If the opening uses paper-specific terms or symbols that are not self-explanatory, add a compact `Key terms` section immediately after it. Explain only the terms specific to this paper's method or theory; do not define generic background terms unless the user asks.
+  - Keep these opening sections concise and readable for someone who has not read the paper. Avoid mixing workflow position, formula mechanics, and terminology into one dense paragraph.
 - Then cover `Core claims`, `Method`, `Evidence`, `Limitations / risks`, and `Research takeaways`.
+- Include a `Critical synthesis` section when writing a deep article note, especially for method papers:
+  - Distinguish the paper's directly optimized/measured proxy objective from the real task objective users care about.
+  - State the proxy assumption in plain language (why improving the proxy is expected to improve the real objective).
+  - Identify any exploration/exploitation, estimation/training, static/dynamic, or cost/quality tensions created by the method.
+  - Also state the positive mechanism that makes the method plausible; do not only criticize. For example, exploration can calibrate noisy difficulty estimates even if it may later underuse confirmed good samples.
+  - Tie critiques to the paper's own evidence: main results, ablations, hyperparameters, and whether limitations are explicit or only implicit.
 - Separate claims grounded in full text from claims grounded in visual page inspection when visual reading was used. Do not infer visual-only numeric table values or plot trends from captions alone if the user specifically asks about the visual.
 
 When reading a collection:
@@ -156,6 +168,7 @@ Common commands:
 ```bash
 python3 scripts/zotero_note_api.py create-standalone --title "Literature note" --html /tmp/note.html --dry-run
 python3 scripts/zotero_note_api.py create-child --parent-key XEY2Q5IQ --title "Article note" --html /tmp/note.html --dry-run
+python3 scripts/zotero_note_api.py update-note --note-key ABCD1234 --parent-key XEY2Q5IQ --html /tmp/note.html
 ```
 
 After inspecting the dry-run payload, repeat the same command without `--dry-run` to upload.
@@ -178,6 +191,8 @@ Common end-to-end article note flow:
 3. Generate conservative Zotero note HTML in `/tmp`.
 4. Run `create-child --parent-key <KEY> --title "<title>" --html /tmp/note.html --dry-run`.
 5. If the payload is correct, run the same command without `--dry-run`.
+
+For revising an existing Zotero note created by this workflow, update the local HTML draft first, then run `update-note --note-key <NOTE_KEY> --parent-key <PARENT_KEY> --html /tmp/note.html`. This command reads the current Zotero item data and preserves existing item fields while replacing the note body.
 
 ## Safety Rules
 

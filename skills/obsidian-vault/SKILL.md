@@ -11,7 +11,10 @@ Use this skill for reading and writing Markdown files in an Obsidian vault. Keep
 
 ## Core Rules
 
-- Treat the current working directory as the vault root when it contains `.obsidian/` or when the user says the current folder is the vault. Otherwise, identify the vault root before editing.
+- Treat the current working directory as the vault root when it contains `.obsidian/` or when the user says the current folder is the vault.
+- If the current directory is not the vault, resolve the vault in this strict order before any broad filesystem search: `$OBSIDIAN_VAULT`, `$OBSIDIAN_VAULT_PATH`, local Codex project config such as `~/.codex/config.toml`, then app-specific Obsidian settings if readily available.
+- Treat a Codex project path as a vault candidate only after confirming it contains `.obsidian/`.
+- Do not run broad `find` over home directories or mounted drives until the explicit local settings and Codex project config checks have failed.
 - Prefer `rg`/`rg --files` and the bundled `scripts/obsidian_context.py` over broad file reads.
 - Exclude `.obsidian/`, `.trash/`, `.git/`, plugin caches, binary attachments, and generated indexes unless the user explicitly asks for them.
 - Read the smallest useful slice first: file paths, headings, frontmatter, matching lines, then targeted full files.
@@ -55,27 +58,35 @@ Use `scripts/new_note.py` when creating ordinary notes. Infer tags first, then p
 
 ## Efficient Search Workflow
 
-1. Start with path discovery:
+1. Start with vault discovery:
 
-Run the bundled script from this skill directory:
+- Use `.` when the current directory contains `.obsidian/`.
+- Otherwise use a local user setting, for example `$OBSIDIAN_VAULT` or `$OBSIDIAN_VAULT_PATH`, if present.
+- If no environment setting is present, inspect local Codex project config for trusted project paths and test each plausible path for `.obsidian/`. For example, check `~/.codex/config.toml` for `[projects."..."]` entries before scanning the filesystem.
+- If app-specific Obsidian settings are available locally, use them as another narrow source before scanning.
+- If none of the narrow sources work, identify the vault root with the smallest bounded search possible. Prefer likely parent folders supplied by the user over searching all of `$HOME` or mounted drives.
 
-```bash
-python3 scripts/obsidian_context.py recent --vault .
-```
+2. Run the bundled script from this skill directory:
 
-2. Search candidate notes with compact matching lines:
-
-```bash
-python3 scripts/obsidian_context.py search "keyword or phrase" --vault . --limit 20 --fixed
-```
-
-3. Preview selected files before reading them fully:
+Use `$VAULT` below as the discovered vault root:
 
 ```bash
-python3 scripts/obsidian_context.py preview "relative/path.md" --vault . --max-chars 3000
+python3 scripts/obsidian_context.py recent --vault "$VAULT"
 ```
 
-4. Open full files only after narrowing the set to files that need direct editing or synthesis.
+3. Search candidate notes with compact matching lines:
+
+```bash
+python3 scripts/obsidian_context.py search "keyword or phrase" --vault "$VAULT" --limit 20 --fixed
+```
+
+4. Preview selected files before reading them fully:
+
+```bash
+python3 scripts/obsidian_context.py preview "relative/path.md" --vault "$VAULT" --max-chars 3000
+```
+
+5. Open full files only after narrowing the set to files that need direct editing or synthesis.
 
 ## Reading Notes
 
@@ -123,13 +134,13 @@ formula_or_example
 Create a new skeleton note when there is not enough content to infer tags:
 
 ```bash
-python3 scripts/new_note.py --vault . --path "Folder/Note Title.md"
+python3 scripts/new_note.py --vault "$VAULT" --path "Folder/Note Title.md"
 ```
 
 Create with body text and inferred tags:
 
 ```bash
-python3 scripts/new_note.py --vault . --path "Folder/Note Title.md" --tag topic --tag subtopic --body "Initial content."
+python3 scripts/new_note.py --vault "$VAULT" --path "Folder/Note Title.md" --tag topic --tag subtopic --body "Initial content."
 ```
 
 ## Bundled Scripts
