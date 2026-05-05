@@ -23,7 +23,7 @@ Use this framing to guide search and reading. Keep it internal for simple tasks;
 
 ## From Notes to Research Claims
 
-Treat Notion and Obsidian ideas as research material, not settled evidence. Convert useful notes into:
+Treat Notion, LLM Wiki, and Obsidian ideas as research material, not settled evidence. Convert useful notes into:
 
 - claim;
 - assumption;
@@ -32,7 +32,7 @@ Treat Notion and Obsidian ideas as research material, not settled evidence. Conv
 - experiment implication;
 - related literature to search.
 
-Recent Notion pages are strong evidence of the user's current focus, not proof that a research claim is true. Older Obsidian notes may be valuable as recurring questions, prior attempts, constraints, or alternative framings.
+Recent Notion pages are strong evidence of the user's current focus, not proof that a research claim is true. LLM Wiki pages are compiled memory and retrieval maps; use them to find sources and prior synthesis, but verify central claims against source-traceable material before treating them as evidence. Older Obsidian notes may be valuable as recurring questions, prior attempts, constraints, or alternative framings.
 
 ## Tentative vs Stable Claims
 
@@ -43,7 +43,7 @@ Keep claim status explicit when it matters:
 - **Stable knowledge**: a durable concept or summary supported well enough to save as reusable knowledge.
 - **Evidence audit**: a stricter pass where every central claim needs anchors and coverage limits.
 
-Do not over-stabilize ideas when writing to Obsidian. If a conclusion is mainly from project notes or current inference, mark it as a working hypothesis or current framing. Notion project outputs can be more current-state oriented, but should still preserve important uncertainty and source anchors.
+Do not over-stabilize ideas when writing to Obsidian. If a conclusion is mainly from project notes, LLM Wiki synthesis, or current inference, mark it as a working hypothesis or current framing. Notion project outputs can be more current-state oriented, but should still preserve important uncertainty and source anchors.
 
 ## Claim-Evidence Matrix
 

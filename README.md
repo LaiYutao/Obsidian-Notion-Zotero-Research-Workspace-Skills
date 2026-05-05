@@ -1,16 +1,18 @@
 # Research Workspace Skills
 
-Four Codex skills for working across research notes, project pages, and papers:
+Five Codex skills for working across research notes, project pages, compiled knowledge, and papers:
 
 - `obsidian-vault`: search, preview, create, and edit Markdown notes in an Obsidian vault.
+- `llm-wiki`: maintain an AI-managed Obsidian-style WiKi vault for source summaries, concept pages, synthesis notes, indexes, and logs.
 - `notion-workspace`: search, read, create, append, and lightly update Notion pages through Notion MCP.
 - `zotero-library`: read a local Zotero library safely and create Zotero notes through the Zotero Web API.
-- `research-workspace`: route and synthesize work across Zotero, Obsidian, and Notion.
+- `research-workspace`: route and synthesize work across Zotero, LLM Wiki, Obsidian, and Notion.
 
 ## Layout
 
 ```text
 skills/
+  llm-wiki/
   notion-workspace/
   obsidian-vault/
   research-workspace/
@@ -28,7 +30,7 @@ mkdir -p ~/.codex/skills
 cp -R skills/* ~/.codex/skills/
 ```
 
-If you maintain skills in another directory, copy the four directories there instead.
+If you maintain skills in another directory, copy the five directories there instead.
 
 ## Configuration
 
@@ -64,9 +66,20 @@ The skill requires dry-run inspection before actual note uploads unless the user
 
 `obsidian-vault` treats the current working directory as the vault root when it contains `.obsidian/` or when the user says the current folder is the vault. It includes helper scripts for compact search, previews, and note creation.
 
+### LLM Wiki
+
+`llm-wiki` expects a dedicated AI-managed Obsidian-style vault. Set:
+
+```bash
+export LLM_WIKI_VAULT=<path-to-your-llm-wiki-vault>
+```
+
+The WiKi vault is intended as a source-traceable compilation layer, separate from the user's main personal Obsidian vault.
+
 ## Safety Notes
 
 - No real API keys or tokens are stored in this repository.
 - Zotero local reads use SQLite `mode=ro`.
 - Zotero writes go through the Web API, never by editing `zotero.sqlite`.
 - Notion writes should go through Notion MCP tools, not browser automation or scraping.
+- LLM Wiki paths are configured through `LLM_WIKI_VAULT`; no private local vault path is stored in this repository.

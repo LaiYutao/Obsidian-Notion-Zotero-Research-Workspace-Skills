@@ -1,0 +1,4 @@
+interface:
+  display_name: "LLM Wiki"
+  short_description: "Maintain an AI-managed Obsidian knowledge wiki"
+  default_prompt: "Use $llm-wiki to ingest sources, answer from my WiKi vault, or lint the knowledge base."

@@ -1,4 +1,4 @@
 interface:
   display_name: "Research Workspace"
-  short_description: "Coordinate Zotero, Obsidian, and Notion for research synthesis"
-  default_prompt: "Use $research-workspace to search related material across Zotero, Obsidian, and Notion, then synthesize or write it to the appropriate workspace."
+  short_description: "Route research across Zotero, LLM Wiki, Obsidian, and Notion"
+  default_prompt: "Use $research-workspace to route a research task across the relevant Zotero, LLM Wiki, Obsidian, or Notion workspace(s), then synthesize or write it to the right place."
