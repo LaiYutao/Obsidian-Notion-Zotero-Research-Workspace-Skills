@@ -16,7 +16,7 @@ Default to Chinese output when the user asks in Chinese.
 Default local data directory:
 
 ```bash
-export ZOTERO_DATA_DIR=<path-to-your-zotero-data-directory>
+export ZOTERO_DATA_DIR=/mnt/d/ABdocument/Zotero
 ```
 
 For Web API note creation, require:

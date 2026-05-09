@@ -142,7 +142,7 @@ When saving synthesized research output, preserve traceability without making th
 When this skill triggers, load only the relevant underlying skill(s):
 
 - Read `zotero-library/SKILL.md` when using Zotero as source evidence or writing Zotero notes.
-- Read `llm-wiki/SKILL.md` when using the WiKi vault, ingesting sources, writing source summaries, preserving intermediate synthesis, or linting the AI-maintained knowledge base.
+- Read `/home/letter/.cc-switch/skills/llm-wiki/SKILL.md` when using the WiKi vault, ingesting sources, writing source summaries, preserving intermediate synthesis, or linting the AI-maintained knowledge base.
 - Read `obsidian-vault/SKILL.md` when searching the user's main personal vault or writing durable personal Markdown notes.
 - Read `notion-workspace/SKILL.md` when searching or writing Notion pages.
 

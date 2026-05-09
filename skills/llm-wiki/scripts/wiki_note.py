@@ -4,11 +4,11 @@
 from __future__ import annotations
 
 import argparse
-import os
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
 
 
+DEFAULT_VAULT = Path("/mnt/d/ACobsidianVault/WiKi")
 BEIJING = timezone(timedelta(hours=8))
 
 
@@ -34,7 +34,7 @@ def yaml_list(values: list[str]) -> str:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Create a standard LLM Wiki note.")
-    parser.add_argument("--vault", default=os.environ.get("LLM_WIKI_VAULT"))
+    parser.add_argument("--vault", default=str(DEFAULT_VAULT))
     parser.add_argument("--path", required=True, help="Note path relative to the vault.")
     parser.add_argument("--type", required=True, choices=["source", "concept", "entity", "topic", "synthesis", "index", "log"])
     parser.add_argument("--tag", action="append", default=[])
@@ -44,8 +44,6 @@ def main() -> None:
     parser.add_argument("--overwrite", action="store_true")
     args = parser.parse_args()
 
-    if not args.vault:
-        raise SystemExit("Set LLM_WIKI_VAULT or pass --vault <path>.")
     root = Path(args.vault).expanduser().resolve()
     path = resolve_note(root, args.path)
     if path.exists() and not args.overwrite:

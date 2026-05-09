@@ -4,11 +4,11 @@
 from __future__ import annotations
 
 import argparse
-import os
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
 
 
+DEFAULT_VAULT = Path("/mnt/d/ACobsidianVault/WiKi")
 BEIJING = timezone(timedelta(hours=8))
 
 
@@ -18,15 +18,13 @@ def now() -> datetime:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Append an LLM Wiki operation log entry.")
-    parser.add_argument("--vault", default=os.environ.get("LLM_WIKI_VAULT"))
+    parser.add_argument("--vault", default=str(DEFAULT_VAULT))
     parser.add_argument("--kind", required=True, choices=["ingest", "query", "lint", "maintenance", "init"])
     parser.add_argument("--title", required=True)
     parser.add_argument("--summary", required=True)
     parser.add_argument("--path", action="append", default=[], help="Relevant vault-relative paths.")
     args = parser.parse_args()
 
-    if not args.vault:
-        raise SystemExit("Set LLM_WIKI_VAULT or pass --vault <path>.")
     root = Path(args.vault).expanduser().resolve()
     timestamp = now()
     log_path = root / "logs" / f"{timestamp:%Y-%m}.md"

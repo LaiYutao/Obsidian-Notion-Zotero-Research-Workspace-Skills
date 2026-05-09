@@ -4,7 +4,6 @@
 from __future__ import annotations
 
 import argparse
-import os
 import re
 import subprocess
 from datetime import datetime
@@ -12,13 +11,11 @@ from pathlib import Path
 
 
 EXCLUDED_DIRS = {".obsidian", ".trash", ".git", "node_modules", ".cache"}
+DEFAULT_VAULT = Path("/mnt/d/ACobsidianVault/WiKi")
 
 
 def vault_path(raw: str | None) -> Path:
-    value = raw or os.environ.get("LLM_WIKI_VAULT")
-    if not value:
-        raise SystemExit("Set LLM_WIKI_VAULT or pass --vault <path>.")
-    return Path(value).expanduser().resolve()
+    return Path(raw).expanduser().resolve() if raw else DEFAULT_VAULT
 
 
 def is_note(path: Path, root: Path) -> bool:

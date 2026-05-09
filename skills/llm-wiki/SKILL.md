@@ -7,14 +7,13 @@ description: "Maintain an AI-managed Obsidian knowledge wiki inspired by Karpath
 
 ## Overview
 
-Use this skill for a dedicated AI-managed Obsidian vault. Treat this vault as a knowledge compilation layer: raw sources enter the vault, Codex turns them into indexed wiki pages and synthesis notes, and useful answers are written back so the knowledge base compounds over time.
+Use this skill for the dedicated AI-managed Obsidian vault at `/mnt/d/ACobsidianVault/WiKi`. Treat this vault as a knowledge compilation layer: raw sources enter the vault, Codex turns them into indexed wiki pages and synthesis notes, and useful answers are written back so the knowledge base compounds over time.
 
 Do not treat this as the user's primary personal vault. The user's existing vault is the editorial layer for their own judgments; this WiKi vault is the agent-maintained research and compilation layer.
 
 ## Vault Discovery
 
-- Prefer `$LLM_WIKI_VAULT` as the default vault path.
-- If `$LLM_WIKI_VAULT` is not set, ask the user for the WiKi vault path or require `--vault <path>` in script commands before reading or writing.
+- Use `/mnt/d/ACobsidianVault/WiKi` as the default vault.
 - If the user explicitly gives another vault path, use that path only after confirming it contains `.obsidian/`.
 - Stay inside the selected vault for all file operations.
 - Exclude `.obsidian/`, `.trash/`, `.git/`, plugin caches, binary attachments, and generated caches from routine reads.
@@ -106,15 +105,15 @@ Report findings first. Fix only when the user asks or the lint request clearly i
 
 ## Bundled Scripts
 
-Use these scripts from this skill directory with `--vault "$LLM_WIKI_VAULT"` unless a different vault is specified:
+Use these scripts from this skill directory with `--vault /mnt/d/ACobsidianVault/WiKi` unless a different vault is specified:
 
 ```bash
-python3 scripts/wiki_context.py recent --vault "$LLM_WIKI_VAULT"
-python3 scripts/wiki_context.py search "query" --vault "$LLM_WIKI_VAULT" --fixed
-python3 scripts/wiki_context.py preview "index.md" --vault "$LLM_WIKI_VAULT"
-python3 scripts/wiki_note.py --vault "$LLM_WIKI_VAULT" --path "synthesis/Topic.md" --type synthesis --tag topic --source "[[wiki/Source.md]]" --body "..."
-python3 scripts/wiki_log.py --vault "$LLM_WIKI_VAULT" --kind query --title "Question answered" --summary "..."
-python3 scripts/wiki_lint.py --vault "$LLM_WIKI_VAULT"
+python3 scripts/wiki_context.py recent --vault /mnt/d/ACobsidianVault/WiKi
+python3 scripts/wiki_context.py search "query" --vault /mnt/d/ACobsidianVault/WiKi --fixed
+python3 scripts/wiki_context.py preview "index.md" --vault /mnt/d/ACobsidianVault/WiKi
+python3 scripts/wiki_note.py --vault /mnt/d/ACobsidianVault/WiKi --path "synthesis/Topic.md" --type synthesis --tag topic --source "[[wiki/Source.md]]" --body "..."
+python3 scripts/wiki_log.py --vault /mnt/d/ACobsidianVault/WiKi --kind query --title "Question answered" --summary "..."
+python3 scripts/wiki_lint.py --vault /mnt/d/ACobsidianVault/WiKi
 ```
 
 Use `apply_patch` for direct edits to existing notes. Use `wiki_note.py` for ordinary new notes and `wiki_log.py` for log entries.

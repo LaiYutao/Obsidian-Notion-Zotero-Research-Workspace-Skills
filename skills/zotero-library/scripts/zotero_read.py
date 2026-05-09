@@ -17,7 +17,7 @@ from pathlib import Path
 from typing import Any
 
 
-DEFAULT_DATA_DIR = ""
+DEFAULT_DATA_DIR = "/mnt/d/ABdocument/Zotero"
 TEXT_LIMIT = 12000
 NOTE_LIMIT = 4000
 SEARCH_CONTEXT = 1200
@@ -34,10 +34,7 @@ RECEIPT_RULE = (
 
 
 def data_dir() -> Path:
-    raw = os.environ.get("ZOTERO_DATA_DIR", DEFAULT_DATA_DIR)
-    if not raw:
-        raise SystemExit("Set ZOTERO_DATA_DIR to your Zotero data directory.")
-    return Path(raw).expanduser().resolve()
+    return Path(os.environ.get("ZOTERO_DATA_DIR", DEFAULT_DATA_DIR)).expanduser().resolve()
 
 
 def connect() -> sqlite3.Connection:

@@ -4,11 +4,11 @@
 from __future__ import annotations
 
 import argparse
-import os
 import re
 from pathlib import Path
 
 
+DEFAULT_VAULT = Path("/mnt/d/ACobsidianVault/WiKi")
 EXCLUDED_DIRS = {".obsidian", ".trash", ".git", "node_modules", ".cache"}
 WIKI_LINK = re.compile(r"\[\[([^\]|#]+)")
 MD_LINK = re.compile(r"\[[^\]]+\]\(([^)]+\.md(?:#[^)]+)?)\)")
@@ -89,11 +89,9 @@ def resolve_md(source: Path, target: str, root: Path) -> bool:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Lint an LLM Wiki vault.")
-    parser.add_argument("--vault", default=os.environ.get("LLM_WIKI_VAULT"))
+    parser.add_argument("--vault", default=str(DEFAULT_VAULT))
     args = parser.parse_args()
 
-    if not args.vault:
-        raise SystemExit("Set LLM_WIKI_VAULT or pass --vault <path>.")
     root = Path(args.vault).expanduser().resolve()
     notes = iter_notes(root)
     stems = note_stems(root)
